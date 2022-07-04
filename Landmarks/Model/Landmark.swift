@@ -1,0 +1,52 @@
+//
+//  Landmark.swift
+//  Landmarks
+//
+//  Created by Tenzin wangyal on 6/22/22.
+//
+
+import Foundation
+import SwiftUI
+import CoreLocation
+//codable makes it easier to move data between the structure and a data file
+
+struct Landmark: Hashable, Codable, Identifiable{
+    var id: Int
+    var name: String
+    var park: String
+    var state: String
+    var description: String
+    var isFavorite : Bool
+    var isFeatured: Bool
+    
+    var category: Category
+        enum Category: String, CaseIterable, Codable {
+            case lakes = "Lakes"
+            case rivers = "Rivers"
+            case mountains = "Mountains"
+        }
+    
+    private var imageName : String
+    var image: Image {
+        Image(imageName)
+    }
+    
+    var featuredImage: Image?{
+        isFeatured ? Image(imageName + "_feature"): nil
+    }
+    
+    private var coordinates: Coordinates
+    
+    var locationCoordinates: CLLocationCoordinate2D{
+        CLLocationCoordinate2D(
+            latitude:  coordinates.latitude,
+            longitude: coordinates.longitude)
+    }
+    
+    struct Coordinates: Hashable, Codable{
+        var latitude : Double
+        var longitude: Double
+    }
+    
+    
+}
